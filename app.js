@@ -14,6 +14,10 @@ const mainRoutes = require('./routes/main')
 //define express app variable
 const app = express();
 
+//parse POST/PUT requests
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 //routes
 app.use('/', mainRoutes)
 app.use('/auth', require('./routes/auth'));
