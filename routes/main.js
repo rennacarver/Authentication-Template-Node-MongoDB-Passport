@@ -13,6 +13,10 @@ router.get('/', (req,res)=>{
 router.get('/register', (req,res)=>{
     res.render('register.ejs')
 })
+router.get('/home', (req,res)=>{
+    console.log(req.user)
+    res.render('home.ejs', {user: req.user})
+})
 // router.post('/signup', authController.postSignup)
 
 module.exports = router

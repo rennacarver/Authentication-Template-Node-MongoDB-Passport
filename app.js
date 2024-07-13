@@ -6,32 +6,36 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan')
 const connectDB = require('./config/database')
-require('dotenv').config({path: './config/.env'})
 
-//import routes
-const mainRoutes = require('./routes/main')
-
-//define express app variable
+//Define express app variable
 const app = express();
 
-//parse POST/PUT requests
+//Enable environment variables
+require('dotenv').config({path: './config/.env'})
+
+// Passport config
+require('./config/passport')(passport)
+
+//Import routes
+const mainRoutes = require('./routes/main')
+
+//Connect to database
+connectDB()
+
+//Set EJS as template engine
+app.set('view engine', 'ejs')
+
+//Define public folder
+app.use(express.static('public'))
+
+//Parse POST/PUT requests
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-//routes
-app.use('/', mainRoutes)
-app.use('/auth', require('./routes/auth'));
+//Cookies
+//app.use(cookieParser());
 
-//connect to database
-connectDB()
-
-//define public folder
-app.use(express.static('public'))
-
-//set EJS as render engine
-app.set('view engine', 'ejs')
-
-//turn on logging using morgan
+//Turn on logging using morgan
 app.use(logger('dev'))
 
 // Configure sessions stored in MongoDB
@@ -39,7 +43,7 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.DB_STRING,
     }),
@@ -52,8 +56,10 @@ app.use(
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
-app.use(express.json());
+
+//Routes
+app.use('/', mainRoutes)
+app.use('/auth', require('./routes/auth'));
 
 app.listen(process.env.PORT, ()=>{
   console.log(`Server is running on: http://localhost:${process.env.PORT}/`)

@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Registration route
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { userName, email, password } = req.body;
 
   try {
     // Check if user already exists
@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
     }
 
     // Create new user
-    user = new User({ email, password });
+    user = new User({ userName, email, password });
 
     // Hash the password
     const salt = await bcrypt.genSalt(10);
@@ -27,7 +27,15 @@ router.post('/register', async (req, res) => {
     // Save user to DB
     await user.save();
 
-    res.json({ message: 'Registration successful' });
+    //res.json({ message: 'Registration successful' });
+    
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err)
+      }
+      res.redirect('/home')
+    })
+    //res.redirect('/home')
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
