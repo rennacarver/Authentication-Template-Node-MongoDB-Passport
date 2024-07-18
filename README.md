@@ -1,9 +1,9 @@
 # Authentication Template July 2024 (Node, MongoDB, Passport, EJS, Express)
 
 Helpful Resources:
-https://www.passportjs.org/tutorials/password/
-https://www.bomberbot.com/lessons/learn-how-to-handle-authentication-in-node-js-with-passport-js/
-https://github.com/100devs/todo-mvc-auth-local
+- https://www.passportjs.org/tutorials/password/
+- https://www.bomberbot.com/lessons/learn-how-to-handle-authentication-in-node-js-with-passport-js/
+- https://github.com/100devs/todo-mvc-auth-local
 
 ## Features
 
