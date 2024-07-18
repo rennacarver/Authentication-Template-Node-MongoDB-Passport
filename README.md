@@ -15,10 +15,10 @@ HTML, CSS, JavaScript, EJS
 
 ## Lessons Learned:
 
--Codebases change quickly and templates from a year ago are often no longer functional
--The order of code in the Node server file is critical for responses to be parsed correctly, sessions to be established properly, and ultimately for authentication to work
+- Codebases change quickly and templates from a year ago are often no longer functional
+- The order of code in the Node server file is critical for responses to be parsed correctly, sessions to be established properly, and ultimately for authentication to work
 
 ## Improvements
--The logout route should be a POST request
--Password and email validation is missing
--Password reset
+- The logout route should be a POST request
+- Password and email validation is missing
+- Password reset
