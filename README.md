@@ -11,7 +11,7 @@ Helpful Resources:
 
 ## How It's Made:
 
-HTML, CSS, JavaScript, EJS
+- HTML, CSS, JavaScript, EJS
 
 ## Lessons Learned:
 
