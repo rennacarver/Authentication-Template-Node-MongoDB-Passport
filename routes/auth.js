@@ -1,34 +1,34 @@
-const express = require('express');
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
+const express = require('express')
+const passport = require('passport')
+const bcrypt = require('bcrypt')
+const User = require('../models/User')
 
-const router = express.Router();
+const router = express.Router()
 
 // Registration route
 router.post('/register', async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { userName, email, password } = req.body
 
   try {
     // Check if user already exists
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email })
 
     if (user) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'User already exists' })
     }
 
     // Create new user
-    user = new User({ userName, email, password });
+    user = new User({ userName, email, password })
 
     // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(password, salt)
 
     // Save user to DB
     await user.save();
 
     //res.json({ message: 'Registration successful' });
-    
+
     req.logIn(user, (err) => {
       if (err) {
         return next(err)
@@ -37,30 +37,34 @@ router.post('/register', async (req, res) => {
     })
     //res.redirect('/home')
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    console.error(err)
+    res.status(500).json({ message: 'Server error' })
   }
-});
+})
 
 // Login route 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
-      return next(err);
+      return next(err)
     }
 
     if (!user) {
-      return res.status(401).json({ message: info.message });
+      return res.status(401).json({ message: info.message })
     }
 
     req.logIn(user, err => {
       if (err) {
-        return next(err);   
+        return next(err)  
       }
 
-      res.json({ message: 'Login successful' });
-    });
-  })(req, res, next);
-});
+      res.redirect('/home')
+    })
+  })(req, res, next)
+})
 
-module.exports = router;
+// Logout route
+
+
+
+module.exports = router
