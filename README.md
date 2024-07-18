@@ -21,4 +21,3 @@ Helpful Resources:
 ## Improvements
 - The logout route should be a POST request
 - Password and email validation is missing
-- Password reset
